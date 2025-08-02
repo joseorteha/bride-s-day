@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para la Más Bella</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #f5f5dc url('descarga.jpg') no-repeat center center fixed;
+            background-size: cover;
+            touch-action: manipulation;
+        }
+        #loveRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .title-container {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        .title {
+            font-family: 'Special Elite', cursive;
+            font-size: 2.8em;
+            color: #333;
+            line-height: 1.4;
+            padding: 30px;
+            background-color: #f9f7f0;
+            border: 12px double transparent;
+            border-image: linear-gradient(to right, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #a1c4fd, #c2e9fb, #a1c4fd) 1;
+            box-shadow: 
+                0 0 0 8px #f9f7f0,
+                0 0 20px rgba(0,0,0,0.3);
+            position: relative;
+            background-image: 
+                linear-gradient(#f9f7f0, #f9f7f0),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 2px,
+                    #ddd 2px,
+                    #ddd 4px
+                );
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+            text-shadow: 
+                1px 1px 0px #fff, 
+                -1px -1px 0px #fff,
+                2px 2px 3px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            word-spacing: 2px;
+            animation: titleFloat 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-10px) rotate(1deg); 
+            }
+        }
+        
+        @keyframes titleGlow {
+            0% { 
+                box-shadow: 
+                    0 0 0 8px #f9f7f0,
+                    0 0 20px rgba(0,0,0,0.3),
+                    0 0 30px rgba(255, 154, 158, 0.3);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 0 8px #f9f7f0,
+                    0 0 20px rgba(0,0,0,0.3),
+                    0 0 40px rgba(255, 154, 158, 0.6);
+            }
+        }
+        
+        .title::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px dashed #ff9a9e;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .title::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border: 1px dotted #a6c1ee;
+            pointer-events: none;
+        }
+
+        /* Estilos para los elogios explosivos */
+        .burst-text {
+            position: absolute;
+            font-family: 'Special Elite', cursive;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            background-color: rgba(249, 247, 240, 0.8);
+            padding: 5px 10px;
+            border: 2px dashed #ff9a9e;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            animation: burst-anim 2s forwards;
+        }
+        
+        @keyframes burst-anim {
+            0% {
+                transform: scale(0.1) translate(0, 0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5) translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        /* Media queries para ajustes en móviles */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2em;
+                padding: 20px;
+                border-width: 8px;
+                animation: titleFloat 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite alternate;
+            }
+            .burst-text {
+                font-size: 1em;
+            }
+            .title-container {
+                top: 88%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.6em;
+                padding: 15px;
+                border-width: 6px;
+                animation: titleFloat 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite alternate;
+            }
+            .title-container {
+                top: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h1 class="title">LINDA MUCHACHITA</h1>
+    </div>
+    <canvas id="loveRain"></canvas>
+
+    <!-- Audio opcional -->
+    <audio id="audio" loop>
+        <source src="musica-romantica.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <script>
+        // Verificación de dispositivo táctil
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        
+        // Configuración del canvas de partículas
+        const loveCanvas = document.getElementById('loveRain');
+        const loveCtx = loveCanvas.getContext('2d');
+
+        function resizeCanvases() {
+            loveCanvas.width = window.innerWidth;
+            loveCanvas.height = window.innerHeight;
+            
+            // Ajustar tamaño de texto según dispositivo
+            const title = document.querySelector('.title');
+            if (window.innerWidth <= 768) {
+                title.style.fontSize = '2em';
+            } else {
+                title.style.fontSize = '2.8em';
+            }
+        }
+        resizeCanvases();
+
+        // Partículas de amor con textos grandes
+        const compliments = [
+            "ERES BELLA", "MUY LINDA", "PRECIOSA", 
+            "HERMOSA", "RADIANTE", "ESPECTACULAR",
+            "MARAVILLOSA", "INCREÍBLE", "FANTÁSTICA",
+            "DESLUMBRANTE", "ÚNICA", "ESPECIAL"
+        ];
+
+        const symbols = ["❤️", "💖", "💘", "💝", "🌹", "✨", "🥰", "💕"];
+        const colors = [
+            "#333", "#5a3921", "#6b4423", "#7a5c48",
+            "#8d6e63", "#a1887f", "#bcaaa4", "#d7ccc8"
+        ];
+
+        const particles = [];
+        const particleCount = isTouchDevice ? 30 : 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const isText = Math.random() > 0.3;
+            particles.push({
+                x: Math.random() * loveCanvas.width,
+                y: Math.random() * -loveCanvas.height,
+                speed: 0.5 + Math.random() * 1.2,
+                size: isText ? 
+                    (isTouchDevice ? 16 + Math.random() * 12 : 20 + Math.random() * 15) : 
+                    (isTouchDevice ? 20 + Math.random() * 15 : 25 + Math.random() * 20),
+                content: isText ? 
+                    compliments[Math.floor(Math.random() * compliments.length)] : 
+                    symbols[Math.floor(Math.random() * symbols.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: 0,
+                opacity: 0.9,
+                sway: Math.random() * 1 - 0.5,
+                swaySpeed: 0.01 + Math.random() * 0.02,
+                isText: isText
+            });
+        }
+
+        function animateLove() {
+            loveCtx.clearRect(0, 0, loveCanvas.width, loveCanvas.height);
+            
+            particles.forEach(particle => {
+                loveCtx.save();
+                loveCtx.translate(particle.x, particle.y);
+                loveCtx.globalAlpha = particle.opacity;
+                
+                if (!particle.isText) {
+                    loveCtx.font = `${particle.size}px serif`;
+                    loveCtx.fillStyle = particle.color;
+                    loveCtx.textAlign = 'center';
+                    loveCtx.textBaseline = 'middle';
+                    loveCtx.fillText(particle.content, 0, 0);
+                } else {
+                    loveCtx.font = `bold ${particle.size}px 'Special Elite', cursive`;
+                    loveCtx.fillStyle = particle.color;
+                    loveCtx.textAlign = 'center';
+                    loveCtx.textBaseline = 'middle';
+                    loveCtx.fillText(particle.content, 0, 0);
+                }
+                
+                loveCtx.restore();
+
+                particle.y += particle.speed;
+                particle.x += particle.sway * Math.sin(particle.y * particle.swaySpeed);
+
+                if (particle.y > loveCanvas.height + 50) {
+                    particle.y = -20;
+                    particle.x = Math.random() * loveCanvas.width;
+                    const isText = Math.random() > 0.3;
+                    particle.content = isText ? 
+                        compliments[Math.floor(Math.random() * compliments.length)] : 
+                        symbols[Math.floor(Math.random() * symbols.length)];
+                    particle.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.size = isText ? 
+                        (isTouchDevice ? 16 + Math.random() * 12 : 20 + Math.random() * 15) : 
+                        (isTouchDevice ? 20 + Math.random() * 15 : 25 + Math.random() * 20);
+                    particle.isText = isText;
+                }
+            });
+
+            requestAnimationFrame(animateLove);
+        }
+        animateLove();
+
+        // Función para crear explosión de elogios
+        function createComplimentBurst(x, y) {
+            const burstCount = isTouchDevice ? 8 : 12;
+            const burstCompliments = [
+                "WOW!", "BELLA", "LINDA", 
+                "PRECIOSA", "HERMOSA", "GENIAL"
+            ];
+            
+            for (let i = 0; i < burstCount; i++) {
+                const elogio = document.createElement('div');
+                elogio.className = 'burst-text';
+                elogio.textContent = burstCompliments[Math.floor(Math.random() * burstCompliments.length)];
+                
+                elogio.style.left = `${x}px`;
+                elogio.style.top = `${y}px`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 150;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                const size = isTouchDevice ? 14 : 18;
+                elogio.style.fontSize = `${size}px`;
+                elogio.style.color = colors[Math.floor(Math.random() * colors.length)];
+                elogio.style.backgroundColor = `rgba(249, 247, 240, ${Math.random() * 0.5 + 0.3})`;
+                elogio.style.border = `1px dashed ${colors[Math.floor(Math.random() * colors.length)]}`;
+                
+                elogio.style.setProperty('--tx', `${tx}px`);
+                elogio.style.setProperty('--ty', `${ty}px`);
+                
+                document.body.appendChild(elogio);
+                
+                setTimeout(() => {
+                    elogio.remove();
+                }, 2000);
+            }
+        }
+
+        // Eventos de interacción
+        document.addEventListener('click', (e) => {
+            createComplimentBurst(e.clientX, e.clientY);
+            document.getElementById('audio').play().catch(e => console.log("Error de audio:", e));
+        });
+        
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            createComplimentBurst(touch.clientX, touch.clientY);
+            document.getElementById('audio').play().catch(e => console.log("Error de audio:", e));
+        });
+
+        window.addEventListener('resize', () => {
+            resizeCanvases();
+        });
+
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

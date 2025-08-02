@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para la Más Bella</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Comic+Neue:wght@700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: #f9f7e8;
+            cursor: pointer;
+            font-family: 'Caveat Brush', cursive;
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        #wall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff9e6;
+            z-index: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23ffd9e4" stroke-width="1" stroke-dasharray="5,5"/></svg>');
+            background-size: 40px 40px;
+        }
+        
+        .title-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+            filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.1));
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .title {
+            font-family: 'Caveat Brush', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: #ff4081;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            padding: 4vw 8vw;
+            background-color: #fffacd;
+            border: max(2px, 0.5vw) solid #ff4081;
+            border-radius: 5px 20px 5px 20px;
+            transform: rotate(-2deg);
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            margin: 0;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: rotate(-2deg) scale(1); }
+            50% { transform: rotate(-2deg) scale(1.05); }
+            100% { transform: rotate(-2deg) scale(1); }
+        }
+        
+        .child-drawing {
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .sun {
+            top: 5%;
+            right: 5%;
+            width: 15vw;
+            height: 15vw;
+            max-width: 80px;
+            max-height: 80px;
+            min-width: 60px;
+            min-height: 60px;
+            background-color: #ffeb3b;
+            border-radius: 50%;
+            border: max(3px, 1vw) solid #ffc107;
+            box-shadow: 0 0 0 max(2px, 0.5vw) #fff9c4;
+        }
+        
+        .sun-rays {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            z-index: -1;
+        }
+        
+        .sun-ray {
+            position: absolute;
+            width: max(5px, 1.5vw);
+            height: max(30px, 6vw);
+            background-color: #ffeb3b;
+            top: 50%;
+            left: 50%;
+            transform-origin: center bottom;
+            border-radius: 10px;
+        }
+        
+        .cloud {
+            background-color: white;
+            border-radius: 50px;
+            border: max(2px, 0.5vw) solid #bbdefb;
+            filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2vw;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        .cloud-text {
+            font-size: clamp(10px, 2.5vw, 16px);
+            color: #5c6bc0;
+            font-weight: bold;
+            transform: rotate(var(--cloud-rotate));
+            padding: 1vw;
+            word-break: break-word;
+            max-width: 90%;
+        }
+        
+        .house {
+            bottom: 25%;
+            left: 5%;
+            transform: rotate(2deg);
+            width: 25vw;
+            max-width: 120px;
+            min-width: 80px;
+        }
+        
+        .house-roof {
+            width: 0;
+            height: 0;
+            border-left: 12vw solid transparent;
+            border-right: 12vw solid transparent;
+            border-bottom: 16vw solid #ff7043;
+            border-bottom-color: #ff7043;
+            border-style: solid;
+            border-width: 0 12vw 16vw 12vw;
+            max-width: 120px;
+            max-height: 160px;
+            min-width: 80px;
+            min-height: 100px;
+            filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.1));
+        }
+        
+        .house-body {
+            width: 100%;
+            height: 16vw;
+            max-height: 80px;
+            min-height: 60px;
+            background-color: #ffccbc;
+            margin-top: -1vw;
+            border: max(2px, 0.5vw) solid #ff8a65;
+            border-top: none;
+        }
+        
+        .house-door {
+            width: 30%;
+            height: 60%;
+            background-color: #8d6e63;
+            margin: 15% auto 0;
+            border: max(1px, 0.3vw) solid #5d4037;
+            border-bottom: max(2px, 0.6vw) solid #5d4037;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .house-window {
+            width: 25%;
+            height: 30%;
+            background-color: #b3e5fc;
+            border: max(1px, 0.3vw) solid #4fc3f7;
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            border-radius: 3px;
+        }
+        
+        .grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15vw;
+            max-height: 100px;
+            min-height: 60px;
+            background-color: #81c784;
+            z-index: 1;
+            border-top: max(2px, 0.5vw) solid #4caf50;
+        }
+        
+        .grass-blades {
+            position: absolute;
+            bottom: 100%;
+            width: 100%;
+            height: 5vw;
+            max-height: 30px;
+            overflow: hidden;
+        }
+        
+        .grass-blade {
+            position: absolute;
+            bottom: 0;
+            width: max(1px, 0.3vw);
+            height: max(5px, 3vw);
+            background-color: #4caf50;
+            transform-origin: bottom center;
+        }
+        
+        .flower {
+            position: absolute;
+            bottom: 15vw;
+        }
+        
+        .flower-stem {
+            width: max(1px, 0.4vw);
+            height: 12vw;
+            max-height: 60px;
+            background-color: #4caf50;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        .flower-head {
+            width: 7vw;
+            height: 7vw;
+            max-width: 35px;
+            max-height: 35px;
+            min-width: 25px;
+            min-height: 25px;
+            border-radius: 50%;
+            background-color: #ffeb3b;
+            margin: -3.5vw auto 0;
+            position: relative;
+            border: max(1px, 0.3vw) solid #ffc107;
+        }
+        
+        .flower-petal {
+            position: absolute;
+            width: 5vw;
+            height: 2.5vw;
+            max-width: 25px;
+            max-height: 12px;
+            min-width: 15px;
+            min-height: 8px;
+            background-color: #ff8a65;
+            border-radius: 10px;
+            border: max(1px, 0.2vw) solid #ff7043;
+        }
+        
+        .person {
+            position: absolute;
+            bottom: 15vw;
+            right: 10%;
+            transform: rotate(-5deg);
+            width: 10vw;
+            max-width: 50px;
+            min-width: 30px;
+        }
+        
+        .person-head {
+            width: 100%;
+            height: 7vw;
+            max-height: 35px;
+            min-height: 25px;
+            background-color: #ffcc80;
+            border-radius: 50%;
+            border: max(1px, 0.3vw) solid #ffa726;
+        }
+        
+        .person-body {
+            width: 60%;
+            height: 10vw;
+            max-height: 50px;
+            min-height: 30px;
+            background-color: #64b5f6;
+            margin: 0 auto;
+            border: max(1px, 0.3vw) solid #1976d2;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .person-arm {
+            width: 8vw;
+            height: 2vw;
+            max-width: 40px;
+            max-height: 10px;
+            min-width: 25px;
+            min-height: 6px;
+            background-color: #64b5f6;
+            position: absolute;
+            top: 40%;
+            border: max(1px, 0.2vw) solid #1976d2;
+            border-radius: 5px;
+        }
+        
+        .person-arm.left {
+            left: -6vw;
+            transform: rotate(30deg);
+        }
+        
+        .person-arm.right {
+            right: -6vw;
+            transform: rotate(-30deg);
+        }
+        
+        .person-leg {
+            width: 2vw;
+            height: 6vw;
+            max-width: 10px;
+            max-height: 30px;
+            min-width: 6px;
+            min-height: 20px;
+            background-color: #1565c0;
+            position: absolute;
+            bottom: -6vw;
+            border: max(1px, 0.2vw) solid #0d47a1;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .person-leg.left {
+            left: 20%;
+        }
+        
+        .person-leg.right {
+            right: 20%;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: clamp(20px, 6vw, 40px);
+            color: #ff4081;
+            animation: float 3s ease-in-out infinite;
+            z-index: 3;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            transform: rotate(-10deg);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: rotate(-10deg) translateY(0); }
+            50% { transform: rotate(-10deg) translateY(-20px); }
+        }
+        
+        #music-control {
+            position: fixed;
+            bottom: 5vw;
+            right: 5vw;
+            z-index: 10;
+            background: #ffeb3b;
+            padding: 4vw;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+            border: max(2px, 0.5vw) solid #ff8a65;
+            font-size: clamp(18px, 6vw, 24px);
+            transform: rotate(5deg);
+            font-family: 'Comic Neue', cursive;
+            width: clamp(40px, 12vw, 60px);
+            height: clamp(40px, 12vw, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .crayon-effect {
+            filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.1));
+            position: relative;
+        }
+        
+        .crayon-effect::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 98%, rgba(0,0,0,0.1) 100%);
+            background-size: 10px 10px;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
+
+        /* Media queries para ajustes específicos */
+        @media (max-width: 500px) {
+            .title {
+                padding: 5vw 8vw;
+            }
+            
+            .house {
+                bottom: 20%;
+            }
+            
+            .flower {
+                bottom: 18vw;
+            }
+            
+            .person {
+                bottom: 18vw;
+            }
+            
+            .cloud-text {
+                font-size: clamp(8px, 2.2vw, 14px);
+                padding: 0.5vw;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .title {
+                font-size: clamp(2rem, 6vh, 3rem);
+            }
+            
+            .house, .flower, .person {
+                bottom: 25vh;
+            }
+            
+            .cloud {
+                padding: 1vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="backgroundMusic" loop>
+        <source src="musica/mi_musica.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control">🎵</div>
+
+    <div id="wall" class="crayon-effect"></div>
+    
+    <!-- Dibujo del sol -->
+    <div class="child-drawing sun crayon-effect">
+        <div class="sun-rays">
+            <!-- Rayos del sol -->
+            <div class="sun-ray" style="transform: rotate(0deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(45deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(90deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(135deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(180deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(225deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(270deg) translateY(-50%);"></div>
+            <div class="sun-ray" style="transform: rotate(315deg) translateY(-50%);"></div>
+        </div>
+    </div>
+    
+    <!-- Nubes con frases bonitas -->
+    <div class="child-drawing cloud crayon-effect" style="top: 10%; left: 15%; width: 20vw; height: 10vw; min-width: 90px; min-height: 45px; transform: rotate(3deg); --cloud-rotate: 2deg;">
+        <div class="cloud-text">Eres la musa de mis canciones tristes</div>
+    </div>
+    <div class="child-drawing cloud crayon-effect" style="top: 15%; left: 30%; width: 25vw; height: 12vw; min-width: 110px; min-height: 55px; transform: rotate(-2deg); --cloud-rotate: -1deg;">
+        <div class="cloud-text">Contigo florecen todos mis jardines</div>
+    </div>
+    <div class="child-drawing cloud crayon-effect" style="top: 8%; left: 60%; width: 22vw; height: 11vw; min-width: 100px; min-height: 50px; transform: rotate(5deg); --cloud-rotate: 3deg;">
+        <div class="cloud-text">Muero cuando te vas</div>
+    </div>
+    
+    <!-- Casa -->
+    <div class="child-drawing house crayon-effect">
+        <div class="house-roof crayon-effect"></div>
+        <div class="house-body crayon-effect">
+            <div class="house-window crayon-effect"></div>
+            <div class="house-window crayon-effect" style="left: auto; right: 15%;"></div>
+            <div class="house-door crayon-effect"></div>
+        </div>
+    </div>
+    
+    <!-- Flores -->
+    <div class="child-drawing flower crayon-effect" style="left: 30%; transform: rotate(3deg);">
+        <div class="flower-stem"></div>
+        <div class="flower-head">
+            <div class="flower-petal" style="top: -15%; left: -40%;"></div>
+            <div class="flower-petal" style="top: -15%; right: -40%;"></div>
+            <div class="flower-petal" style="bottom: -15%; left: -40%;"></div>
+            <div class="flower-petal" style="bottom: -15%; right: -40%;"></div>
+        </div>
+    </div>
+    
+    <div class="child-drawing flower crayon-effect" style="left: 45%; transform: rotate(-2deg);">
+        <div class="flower-stem"></div>
+        <div class="flower-head">
+            <div class="flower-petal" style="top: -15%; left: -40%; transform: rotate(45deg);"></div>
+            <div class="flower-petal" style="top: -15%; right: -40%; transform: rotate(-45deg);"></div>
+            <div class="flower-petal" style="bottom: -15%; left: -40%; transform: rotate(-45deg);"></div>
+            <div class="flower-petal" style="bottom: -15%; right: -40%; transform: rotate(45deg);"></div>
+        </div>
+    </div>
+    
+    <div class="child-drawing flower crayon-effect" style="left: 60%; transform: rotate(5deg);">
+        <div class="flower-stem"></div>
+        <div class="flower-head">
+            <div class="flower-petal" style="top: 0; left: -50%; transform: rotate(90deg);"></div>
+            <div class="flower-petal" style="top: -30%; left: 0;"></div>
+            <div class="flower-petal" style="top: 0; right: -50%; transform: rotate(90deg);"></div>
+            <div class="flower-petal" style="bottom: -30%; left: 0;"></div>
+        </div>
+    </div>
+    
+    <!-- Persona -->
+    <div class="child-drawing person crayon-effect">
+        <div class="person-head"></div>
+        <div class="person-body">
+            <div class="person-arm left"></div>
+            <div class="person-arm right"></div>
+            <div class="person-leg left"></div>
+            <div class="person-leg right"></div>
+        </div>
+    </div>
+    
+    <!-- Pasto -->
+    <div class="grass crayon-effect"></div>
+    <div class="grass-blades crayon-effect"></div>
+    
+    <!-- Texto central -->
+    <div class="title-container">
+        <h1 class="title crayon-effect">MI BONITA</h1>
+    </div>
+    
+    <!-- Corazones flotantes -->
+    <div class="heart" style="top: 20%; left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="top: 30%; left: 70%; animation-delay: 0.5s;">💖</div>
+    <div class="heart" style="top: 15%; left: 80%; animation-delay: 1s;">💘</div>
+    <div class="heart" style="top: 35%; left: 25%; animation-delay: 1.5s;">💝</div>
+    <div class="heart" style="top: 40%; left: 60%; animation-delay: 2s;">🌹</div>
+
+    <script>
+        // Frases bonitas para las nubes (tus textos personales)
+        const cloudMessages = [
+            "Eres la musa de mis canciones tristes",
+            "Contigo florecen todos mis jardines",
+            "Muero cuando te vas",
+            "Toco el cielo si estás",
+            "Nos entendemos sin hablar",
+            "Siempre quiero que vuelvas",
+            "Se congela el mundo si te veo",
+            "Me desvistes el alma",
+            "Eres mi cuento de hadas",
+            "Sin ti, nada tiene gracia",
+            "Te pienso en cada canción",
+            "Tu beso, mi refugio",
+            "Con un beso tuyo renazco",
+            "Tú y yo, frente al mar",
+            "Haces que todo en mí brille"
+        ];
+        
+        // Configuración del reproductor de música
+        const music = document.getElementById('backgroundMusic');
+        const musicControl = document.getElementById('music-control');
+        let musicPlaying = false;
+
+        // Control de música al hacer clic
+        musicControl.addEventListener('click', function() {
+            if (musicPlaying) {
+                music.pause();
+                musicControl.textContent = '🔇';
+            } else {
+                music.play().catch(e => console.log("Error al reproducir:", e));
+                musicControl.textContent = '🎵';
+            }
+            musicPlaying = !musicPlaying;
+        });
+
+        // Intenta reproducir automáticamente al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            music.volume = 0.7;
+            
+            // Actualizar textos de las nubes
+            updateCloudMessages();
+            
+            // Solo intenta autoplay después de interacción del usuario
+            const playMusic = () => {
+                music.play()
+                    .then(() => {
+                        musicPlaying = true;
+                        musicControl.textContent = '🎵';
+                    })
+                    .catch(error => {
+                        console.log("Autoplay bloqueado. Esperando interacción del usuario.");
+                        musicControl.textContent = '🔇';
+                    });
+            };
+
+            // Intenta reproducir al primer toque/click
+            document.body.addEventListener('click', function firstClick() {
+                playMusic();
+                document.body.removeEventListener('click', firstClick);
+            }, { once: true });
+        });
+
+        // Función para actualizar mensajes en las nubes
+        function updateCloudMessages() {
+            const clouds = document.querySelectorAll('.cloud-text');
+            clouds.forEach(cloud => {
+                // Seleccionar mensaje aleatorio
+                const randomMessage = cloudMessages[Math.floor(Math.random() * cloudMessages.length)];
+                cloud.textContent = randomMessage;
+                
+                // Rotación aleatoria para efecto más natural
+                const rotation = Math.random() * 10 - 5; // Entre -5 y 5 grados
+                cloud.style.setProperty('--cloud-rotate', `${rotation}deg`);
+            });
+            
+            // Cambiar mensajes periódicamente
+            setTimeout(updateCloudMessages, 10000); // Cada 10 segundos
+        }
+        
+        // Crear más corazones flotantes (adaptados para móviles)
+        function createHearts() {
+            const hearts = ['❤️', '💖', '💘', '💝', '🌹', '✨'];
+            const wall = document.getElementById('wall');
+            
+            // Menos corazones en móviles para mejor rendimiento
+            const heartCount = window.innerWidth < 768 ? 8 : 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 90 + 'vw';
+                heart.style.top = Math.random() * 90 + 'vh';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heart.style.animationDuration = (3 + Math.random() * 4) + 's';
+                heart.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+                wall.appendChild(heart);
+            }
+        }
+        
+        // Crear hojas de pasto (optimizado para móviles)
+        function createGrassBlades() {
+            const grassBlades = document.querySelector('.grass-blades');
+            // Menos hojas en móviles
+            const bladeCount = window.innerWidth < 768 ? 50 : 100;
+            
+            for (let i = 0; i < bladeCount; i++) {
+                const blade = document.createElement('div');
+                blade.className = 'grass-blade';
+                blade.style.left = Math.random() * 100 + 'vw';
+                blade.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+                blade.style.height = (Math.random() * 15 + 5) + 'px';
+                grassBlades.appendChild(blade);
+            }
+        }
+        
+        // Inicializar elementos
+        createHearts();
+        createGrassBlades();
+
+        // Redimensionar elementos al cambiar orientación
+        window.addEventListener('resize', function() {
+            document.querySelectorAll('.heart').forEach(el => el.remove());
+            document.querySelectorAll('.grass-blade').forEach(el => el.remove());
+            createHearts();
+            createGrassBlades();
+        });
+    </script>
+</body>
+</html>

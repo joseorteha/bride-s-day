@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Champiñón ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff9fb;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Header minimalista */
+        .elegant-header {
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #d23669;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .champignon-nickname {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #d23669;
+            font-style: italic;
+            margin-top: 15px;
+        }
+        
+        /* Contador de días minimalista */
+        .days-counter {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin: 50px auto;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(210, 54, 105, 0.1);
+            border: 1px solid rgba(210, 54, 105, 0.1);
+        }
+        
+        .counter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #d23669;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        .counter-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .counter-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 15px;
+            color: #d23669;
+            text-align: center;
+            border: 1px solid rgba(210, 54, 105, 0.2);
+            min-width: 100px;
+        }
+        
+        .counter-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .counter-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #888;
+        }
+        
+        .counter-date {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+        
+        /* Sección romántica minimalista */
+        .romantic-section {
+            padding: 40px 20px;
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .romantic-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d23669, transparent);
+        }
+        
+        .romantic-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Sección sobre nosotros minimalista */
+        .about-us-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin: 60px auto;
+            box-shadow: 0 5px 15px rgba(210, 54, 105, 0.1);
+            border: 1px solid rgba(210, 54, 105, 0.1);
+        }
+        
+        .about-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #d23669;
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 700;
+        }
+        
+        .about-item {
+            margin: 30px 0;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(210, 54, 105, 0.1);
+        }
+        
+        .about-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .about-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #d23669;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .about-answer {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        /* Menú de proyectos minimalista */
+        .projects-menu {
+            padding: 40px 0;
+            margin: 60px 0;
+        }
+        
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #d23669;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(210, 54, 105, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(210, 54, 105, 0.1);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(210, 54, 105, 0.15);
+        }
+        
+        .project-icon {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            display: block;
+            color: #d23669;
+        }
+        
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .project-description {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+        
+        /* Footer minimalista */
+        .footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 60px;
+            border-top: 1px solid rgba(210, 54, 105, 0.1);
+        }
+        
+        .footer-heart {
+            color: #d23669;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .champignon-nickname {
+                font-size: 1.5rem;
+            }
+            
+            .romantic-text {
+                font-size: 1.2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .project-card {
+                padding: 25px;
+            }
+        }
+        
+        /* Animaciones sutiles */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Efecto de flor minimalista */
+        .flor-decoration {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .flor-1 {
+            top: 10%;
+            left: 5%;
+            background: radial-gradient(circle, #d23669 0%, transparent 70%);
+        }
+        
+        .flor-2 {
+            bottom: 15%;
+            right: 5%;
+            background: radial-gradient(circle, #d23669 0%, transparent 70%);
+        }
+        
+        /* Corazones flotantes */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 12px;
+            color: rgba(210, 54, 105, 0.3);
+            animation: floatHeart 8s ease-in-out infinite;
+        }
+        
+        @keyframes floatHeart {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+                opacity: 0.3; 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg); 
+                opacity: 0.6; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decoración minimalista -->
+    <div class="flor-decoration flor-1"></div>
+    <div class="flor-decoration flor-2"></div>
+    
+    <!-- Corazones flotantes -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <div class="main-container">
+        <!-- Header minimalista -->
+        <div class="elegant-header fade-in">
+            <h1 class="main-title">Para Mi Amor</h1>
+            <p class="subtitle">Feliz Día de la Novia</p>
+            <div class="champignon-nickname">Mi Champiñón ❤️</div>
+        </div>
+        
+        <!-- Contador de días minimalista -->
+        <div class="days-counter fade-in" style="animation-delay: 0.2s">
+            <h2 class="counter-title">Nuestro Tiempo Juntos</h2>
+            <div class="counter-grid">
+                <div class="counter-item">
+                    <span class="counter-number" id="daysCounter">934</span>
+                    <span class="counter-label">Días</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="hoursCounter">00</span>
+                    <span class="counter-label">Horas</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="minutesCounter">00</span>
+                    <span class="counter-label">Minutos</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="secondsCounter">00</span>
+                    <span class="counter-label">Segundos</span>
+                </div>
+            </div>
+            <p class="counter-date">Desde el 11 de Enero de 2023</p>
+        </div>
+        
+        <!-- Sección romántica minimalista -->
+        <div class="romantic-section fade-in" style="animation-delay: 0.4s">
+            <p class="romantic-text">
+                "Ingrid, mi Champiñón, en la sencillez de cada día encuentro la profundidad de nuestro amor. 
+                Tu risa es mi melodía favorita, tu mirada mi refugio. Gracias por ser mi constante en este mundo cambiante."
+                jeje muy poetico el jose Te amooooooooooo chocolatito 🥺❤️
+            </p>
+        </div>
+        
+        <!-- Sección sobre nosotros minimalista -->
+        <div class="about-us-section fade-in" style="animation-delay: 0.6s">
+            <h3 class="about-title">Nuestra Historia</h3>
+            
+            <div class="about-item">
+                <div class="about-question">¿Cómo nos conocimos?</div>
+                <div class="about-answer">Entre papeles y sonrisas nerviosas en Zongolica, donde el destino tejía sin prisa los hilos de nuestro amor.</div>
+            </div>
+            
+            <div class="about-item">
+                <div class="about-question">¿Nuestro lugar especial?</div>
+                <div class="about-answer">Esa casita bañada por el sol de la tarde, testigo silencioso de nuestros secretos y risas compartidas.</div>
+            </div>
+            
+            <div class="about-item">
+                <div class="about-question">¿Nuestro tesoro más preciado?</div>
+                <div class="about-answer">El oso café que duerme contigo (o en el suelo), símbolo de mi amor que siempre estará a tu lado.</div>
+            </div>
+            
+            <div class="about-item">
+                <div class="about-question">¿Nuestras aventuras favoritas?</div>
+                <div class="about-answer">Los caminos a Orizaba, la emoción de los partidos, la libertad en nuestra moto, y todos los momentos que aún nos esperan.</div>
+            </div>
+        </div>
+        
+        <!-- Menú de proyectos minimalista -->
+        <div class="projects-menu fade-in" style="animation-delay: 0.8s">
+            <h2 class="menu-title">Regalos Bonitos</h2>
+            <div class="projects-grid">
+                <a href="./bonita/MIBONITA-main/index.html" class="project-card" target="_blank">
+                    <span class="project-icon">🌸</span>
+                    <h3 class="project-title">Mi Bonita</h3>
+                    <p class="project-description">Un universo de amor donde cada estrella lleva tu nombre</p>
+                </a>
+                
+                <a href="./corazon/C0R4ZON1NDESTRUCT1BL3-main/index.html" class="project-card" target="_blank">
+                    <span class="project-icon">💖</span>
+                    <h3 class="project-title">Corazón Cósmico</h3>
+                    <p class="project-description">Un corazón que late al ritmo de nuestro amor eterno</p>
+                </a>
+                
+                <a href="./linda/LINDAMUCHACHITA-main/index.html" class="project-card" target="_blank">
+                    <span class="project-icon">🌹</span>
+                    <h3 class="project-title">Linda Muchachita</h3>
+                    <p class="project-description">Melodías y palabras que pintan nuestro amor</p>
+                </a>
+                
+                <a href="./tiroteo/TIROTEO-main/index.html" class="project-card" target="_blank">
+                    <span class="project-icon">🎨</span>
+                    <h3 class="project-title">Tiroteo de Amor</h3>
+                    <p class="project-description">Trazo a trazo, el arte sencillo de quererte</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Footer minimalista -->
+        <div class="footer fade-in" style="animation-delay: 1s">
+            <p>Hecho con <span class="footer-heart">❤️</span> por Josesito para su Champiñón</p>
+        </div>
+    </div>
+
+    <script>
+        // Calcular tiempo desde el 11-01-2023
+        function calculateTime() {
+            const startDate = new Date('2023-01-11T00:00:00');
+            const now = new Date();
+            const timeDiff = now.getTime() - startDate.getTime();
+            
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            return { days, hours, minutes, seconds };
+        }
+        
+        // Actualizar contador en tiempo real
+        function updateCounter() {
+            const time = calculateTime();
+            
+            document.getElementById('daysCounter').textContent = time.days;
+            document.getElementById('hoursCounter').textContent = time.hours.toString().padStart(2, '0');
+            document.getElementById('minutesCounter').textContent = time.minutes.toString().padStart(2, '0');
+            document.getElementById('secondsCounter').textContent = time.seconds.toString().padStart(2, '0');
+        }
+        
+        // Inicializar cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCounter();
+            
+            // Actualizar contador cada segundo
+            setInterval(updateCounter, 1000);
+            
+            // Crear corazones flotantes
+            createFloatingHearts();
+            
+            // Efecto de entrada escalonado
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                element.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+        
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const heartCount = 12;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+</html>
